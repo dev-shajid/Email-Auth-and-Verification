@@ -30,19 +30,22 @@ router.post('/create', validateRegUser, async (req, res, next) => {
             res.status(400).json({error:errors.formatWith(err=>err.msg).mapped()})
         } else {
             let user = await User.findOne({ email: email, verified:true})
+            let unverifiedUser = await User.findOne({ email: email, verified:false})
             
             if (user) {
                 res.status(400).json({error:"Email already exist"})
             } else {
-                await User.deleteOne({ email: email, verified:false})
-                await Token.deleteOne({ email: email})
+                if(unverifiedUser){
+                    await unverifiedUser.remove()
+                    await Token.deleteOne({userId:unverifiedUser._id})
+                }
                 
                 const hashedPassword = await bcrypt.hash(password, 10)
                 let createdUser = await User.create({ name, email, password: hashedPassword })
                 
-                const token = await jwt.sign({ _id: createdUser._id }, process.env.SECRET_KEY, { expiresIn: "7d" })
+                const token = jwt.sign({ _id: createdUser._id }, process.env.SECRET_KEY)
                 
-                let createUserToken = await Token.create({ userId: createdUser._id, token: token })
+                await Token.create({ userId: createdUser._id, token: token })
                 
                 const url = `${process.env.CLIENT}user/${createdUser._id}/verify/${token}`
 
