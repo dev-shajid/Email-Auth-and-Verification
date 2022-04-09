@@ -1,23 +1,30 @@
-const nodemailer = require('nodemailer')
-// const SibApiV3Sdk = require('sib-api-v3-sdk');
+const nodemailer = require('nodemailer');
+const { generateEmail } = require('./temp');
 
 
 const sendEmail = async (req, res) => {
     let { userEmail, subject, text } = req.body.emailData
     try {
       const transporter = nodemailer.createTransport({
-        service: "gmail",
+        service: "outlook",
         auth: {
-          user: process.env.USER_EMAIL,
-          pass: process.env.PASS,
+          user: 'shajib.dev@outlook.com',
+          pass: 'shajib786',
+          // pass: 'cxywvuqbbkbkfiwl'
         },
+          // host: "smtp.mailtrap.io",
+          // port: 2525,
+          // auth: {
+          //   user: "4dcec8ee488ab5",
+          //   pass: "e40dbd2e5777b2"
+          // }
       });
 
       const mailOptions = {
         from: process.env.USER_EMAIL,
         to: userEmail,
         subject: subject,
-        html: text,
+        html: generateEmail(text),
       };
 
         // call SIB api 
