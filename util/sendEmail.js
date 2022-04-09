@@ -9,6 +9,7 @@ const sendEmail = async (req, res) => {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
+          type: "OAuth2",
           user: 'developer.shajib@gmail.com',
           pass: '##sh@jib729##',
           clientId: process.env.OAUTH_CLIENTID,
