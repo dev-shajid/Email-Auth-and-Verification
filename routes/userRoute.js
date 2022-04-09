@@ -50,8 +50,8 @@ router.post('/create', validateRegUser, async (req, res, next) => {
                 const url = `${process.env.CLIENT}user/${createdUser._id}/verify/${token}`
 
                 // Email Template 
-                const email_temp = `<div style="min-height:50px;width:100%;padding:10px 0;"><a href=${url} style="text-decoration:none; background:#474bfc;color:white;padding:10px 30px;border-radius:4px;font-size:1.2rem;cursor:pointer;">Verify Account</a></div>`
-                // const email_temp = url
+                // const email_temp = `<div style="min-height:50px;width:100%;padding:10px 0;"><a href=${url} style="text-decoration:none; background:#474bfc;color:white;padding:10px 30px;border-radius:4px;font-size:1.2rem;cursor:pointer;">Verify Account</a></div>`
+                const email_temp = url
                 
                 // Remove the user from user and token model if not verified account after 5 min
                 // setTimeout(async () => {

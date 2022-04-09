@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const mailgun = require("mailgun-js");
 const { generateEmail } = require('./temp');
 
 
@@ -6,10 +7,13 @@ const sendEmail = async (req, res) => {
     let { userEmail, subject, text } = req.body.emailData
     try {
       const transporter = nodemailer.createTransport({
-        service: "outlook",
+        service: "gmail",
         auth: {
-          user: 'shajib.dev@outlook.com',
-          pass: 'shajib786',
+          user: 'developer.shajib@gmail.com',
+          pass: '##sh@jib729##',
+          clientId: process.env.OAUTH_CLIENTID,
+          clientSecret: process.env.OAUTH_CLIENT_SECRET,
+          refreshToken: process.env.OAUTH_REFRESH_TOKEN,
           // pass: 'cxywvuqbbkbkfiwl'
         },
           // host: "smtp.mailtrap.io",
@@ -21,7 +25,7 @@ const sendEmail = async (req, res) => {
       });
 
       const mailOptions = {
-        from: process.env.USER_EMAIL,
+        from: 'developer.shajib@gmail.com',
         to: userEmail,
         subject: subject,
         html: generateEmail(text),
