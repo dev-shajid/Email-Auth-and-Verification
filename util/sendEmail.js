@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer');
-const mailgun = require("mailgun-js");
 const { generateEmail } = require('./temp');
 
 
@@ -8,14 +7,12 @@ const sendEmail = async (req, res) => {
     try {
       const transporter = nodemailer.createTransport({
         service: "gmail",
+        smtp:'smtp.gmail.com',
+        port:'587',
+        secure:'tls',
         auth: {
-          type: "OAuth2",
-          user: 'developer.shajib@gmail.com',
-          pass: '##sh@jib729##',
-          clientId: process.env.OAUTH_CLIENTID,
-          clientSecret: process.env.OAUTH_CLIENT_SECRET,
-          refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-          // pass: 'cxywvuqbbkbkfiwl'
+          user: process.env.USER_EMAIL,
+          pass: process.env.PASS,
         },
           // host: "smtp.mailtrap.io",
           // port: 2525,
@@ -26,13 +23,13 @@ const sendEmail = async (req, res) => {
       });
 
       const mailOptions = {
-        from: 'developer.shajib@gmail.com',
+        from: process.env.USER_EMAIL,
         to: userEmail,
         subject: subject,
         html: generateEmail(text),
       };
 
-        // call SIB api 
+      // call SIB api 
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
             res.status(400).json({error:error})

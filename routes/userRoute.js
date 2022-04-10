@@ -128,7 +128,7 @@ router.get('/auth', Authenticate, (req, res) => {
 
 // send main
 router.get("/mail",async (req, res, next)=>{
-    req.body.emailData={userEmail:'sajidislam9907@gmail.com', subject:"Please Verify Your Account", text:"This is just a demo text to check the is gone to reciever or not perfectly. so please dont be afraid of this email."}
+    req.body.emailData={userEmail:'shajib.dev@outlook.com', subject:"Please Verify Your Account", text:"This is just a demo text to check the is gone to reciever or not perfectly. so please dont be afraid of this email."}
     next()    
 }, sendEmail)
 
