@@ -27,6 +27,7 @@ const Registration = () => {
       body:JSON.stringify(input)
     })  
     const data = await res.json()
+    console.log(data);
     
     if (res.status === 200) {
       // toast.success(data.message);
