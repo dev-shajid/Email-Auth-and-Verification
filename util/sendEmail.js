@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer');
 const { generateEmail } = require('./temp');
 
-
 const sendEmail = async (req, res) => {
     let { userEmail, subject, text } = req.body.emailData
     try {
@@ -9,17 +8,11 @@ const sendEmail = async (req, res) => {
         service: "gmail",
         smtp:'smtp.gmail.com',
         port:'587',
-        secure:'tls',
+        secure:false,
         auth: {
           user: process.env.USER_EMAIL,
-          pass: process.env.PASS,
+          pass: "##sh@jib729##",
         },
-          // host: "smtp.mailtrap.io",
-          // port: 2525,
-          // auth: {
-          //   user: "4dcec8ee488ab5",
-          //   pass: "e40dbd2e5777b2"
-          // }
       });
 
       const mailOptions = {
