@@ -4,18 +4,29 @@ const { generateEmail } = require('./temp');
 const sendEmail = async (req, res) => {
     let { userEmail, subject, text } = req.body.emailData
     try {
+      // const transporter = nodemailer.createTransport({
+      //   service: "gmail",
+      //   host:'smtp.gmail.com',
+      //   port:587,
+      //   secure:false,
+      //   auth: {
+      //     user: process.env.USER_EMAIL,
+      //     pass: "##sh@jib729##",
+      //   },
+      //   tls: {
+      //     // do not fail on invalid certs
+      //     rejectUnauthorized: false
+      //   },
+      // });
+
       const transporter = nodemailer.createTransport({
         service: "gmail",
-        host:'smtp.gmail.com',
-        port:587,
-        secure:false,
         auth: {
+          type:"OAuth2",
           user: process.env.USER_EMAIL,
-          pass: "##sh@jib729##",
-        },
-        tls: {
-          // do not fail on invalid certs
-          rejectUnauthorized: false
+          clientId: process.env.CLIENT_ID,
+          clientSecret: process.env.CLIENT_SECRET,
+          refreshToken: process.env.REFRESH_TOKEN,
         },
       });
 
