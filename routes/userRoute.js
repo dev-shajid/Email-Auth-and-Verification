@@ -45,7 +45,7 @@ router.post('/create', validateRegUser, async (req, res, next) => {
                 
                 const token = jwt.sign({ _id: createdUser._id }, process.env.SECRET_KEY)
                 
-                await Token.create({ userId: createdUser._id, token: token })
+                const createUserToken=await Token.create({ userId: createdUser._id, token: token })
                 
                 const url = `${process.env.CLIENT}user/${createdUser._id}/verify/${token}`
 
