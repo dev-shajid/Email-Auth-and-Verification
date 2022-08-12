@@ -48,9 +48,6 @@ router.post('/create', validateRegUser, async (req, res, next) => {
                 const createUserToken=await Token.create({ userId: createdUser._id, token: token })
                 
                 const url = `${process.env.CLIENT}user/${createdUser._id}/verify/${token}`
-
-                // Email Template 
-                const email_temp = url
                 
                 // Remove the user from user and token model if not verified account after 5 min
                 setTimeout(async () => {
@@ -58,6 +55,9 @@ router.post('/create', validateRegUser, async (req, res, next) => {
                     await createUserToken.remove()
                     await createdUser.remove()
                 }, 300000)
+
+                // Email Template 
+                const email_temp = url
                 
                 req.body.emailData={userEmail:createdUser.email, subject:"Please Verify Your Account", text:email_temp}
                 next()                
@@ -127,7 +127,7 @@ router.get('/auth', Authenticate, (req, res) => {
 
 // send main
 router.post("/mail",async (req, res, next)=>{
-    req.body.emailData={userEmail:req.body.email, subject:"Please Verify Your Account", text:"This is just a demo text to check the is gone to reciever or not perfectly. so please dont be afraid of this email."}
+    req.body.emailData={userEmail:'sajidislam729@gmail.com', subject:"Please Verify Your Account", text:"This is just a demo text to check the is gone to reciever or not perfectly. so please dont be afraid of this email."}
     next()    
 }, sendEmail)
 
